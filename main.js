@@ -2,8 +2,8 @@ var http = require('http');
 
 // configure our HTTP server
 var server = http.createServer(function(request, response) {
-  response.writeHead(200, { 'Content-Type': 'text/plain' });
-  response.end('Build by Jenkins\n');
+  response.writeHead(200, { 'Content-Type': 'text/html' });
+  response.end('<h1 align="center">Build by Jenkins</h1>\n');
 });
 
 // listen on localhost:8000
