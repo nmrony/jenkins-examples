@@ -1,8 +1,8 @@
 #!/usr/bin/env groovy
 
-node {
-  def app
-  pipeline {
+pipeline {
+  node {
+    def app
     stages {
       stage('Clone') {
         steps {
