@@ -1,4 +1,4 @@
-FROM node:9-onbuild
+FROM node:9-alpine
 
 # set maintainer
 LABEL maintainer "pro.nmrony@gmail.com"
