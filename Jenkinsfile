@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-node {
+pipeline {
   def app
 
   stages {
