@@ -14,7 +14,7 @@ node {
     stage('Build image') {
       steps {
         // This builds the actual image; synonymous to docker build on the command line
-        app = docker.build("nmrony/jenkins-node:${env.BUILD_NUMBER}")
+        app = docker.build("nmrony/jenkins-node")
       }
     }
 
