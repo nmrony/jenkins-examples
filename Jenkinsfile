@@ -41,22 +41,24 @@ pipeline {
         }
 
         stage('Deploy') {
-            input message: 'Finished using the web site? (Click "Proceed" to continue)'
-            def remote = [:]
-            remote.name = "playground-vbox"
-            remote.host = "192.168.0.105"
-            remote.allowAnyHosts = true
-            remote.fileTransfer = 'scp'
+            steps {
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                def remote = [:]
+                remote.name = "playground-vbox"
+                remote.host = "192.168.0.105"
+                remote.allowAnyHosts = true
+                remote.fileTransfer = 'scp'
 
-            withCredentials([
-                usernamePassword(
-                    credentialsId: 'rolex-ssh-user',
-                    passwordVariable: 'password',
-                    usernameVariable: 'username')
-            ]) {
-                sshPut remote: remote, from: './build/*', into: '~/projects/test'
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'rolex-ssh-user',
+                        passwordVariable: 'password',
+                        usernameVariable: 'username')
+                ]) {
+                    sshPut remote: remote, from: './build/*', into: '~/projects/test'
+                }
+
             }
-
         }
     }
 }
