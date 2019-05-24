@@ -1,25 +1,38 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:9-alpine'
-            args '-p 3000:3000'
-        }
-    }
+    agent none;
     environment {
         CI = 'true'
     }
     stages {
         stage('Build') {
+            agent {
+                docker {
+                    image 'node:9-alpine'
+                    args '-p 3000:3000'
+                }
+            }
             steps {
                 sh 'npm install'
             }
         }
         stage('Test') {
+            agent {
+                docker {
+                    image 'node:9-alpine'
+                    args '-p 3000:3000'
+                }
+            }
             steps {
                 sh './jenkins/scripts/test.sh'
             }
         }
         stage('Check') {
+            agent {
+                docker {
+                    image 'node:9-alpine'
+                    args '-p 3000:3000'
+                }
+            }
             steps {
                 sh './jenkins/scripts/deliver.sh'
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
