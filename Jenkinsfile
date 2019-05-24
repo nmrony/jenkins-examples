@@ -47,18 +47,17 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                node {
-                    input message: 'Deploy to server (Click "Proceed" to continue)'
-                    withCredentials([
-                        usernamePassword(
-                            credentialsId: 'rolex-ssh-user',
-                            passwordVariable: 'password',
-                            usernameVariable: 'username')
-                    ]) {
-                        sshPut remote: remote, from: './build/*', into: '~/projects/test'
-                    }
-                 }
-            }
+                input message: 'Deploy to server (Click "Proceed" to continue)'
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'rolex-ssh-user',
+                        passwordVariable: 'password',
+                        usernameVariable: 'username')
+                ]) {
+                    sshPut remote: remote, from: './build/*', into: '~/projects/test'
+                }
+                }
+
         }
     }
 }
