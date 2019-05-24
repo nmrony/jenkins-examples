@@ -42,8 +42,8 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                step {
-                    input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                input message: 'Deploy to server (Click "Proceed" to continue)'
+                node {
                     def remote = [:]
                     remote.name = "playground-vbox"
                     remote.host = "192.168.0.105"
@@ -58,7 +58,7 @@ pipeline {
                     ]) {
                         sshPut remote: remote, from: './build/*', into: '~/projects/test'
                     }
-             }
+                 }
             }
         }
     }
