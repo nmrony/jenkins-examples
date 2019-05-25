@@ -8,6 +8,10 @@ pipeline {
     }
   }
 
+  environment {
+     SSH = credentials("rolex-ssh-user")
+  }
+
   stages {
     stage("Install dependencies"){
       steps{
@@ -41,19 +45,15 @@ pipeline {
         }
         stage('Publish') {
           def remote = [:]
-          remote.name = "playground-vbox"
+          remote.name = "vbox-test-01"
           remote.host = "192.168.0.105"
           remote.allowAnyHosts = true
           remote.fileTransfer = 'scp'
+          remote.user = $SSH_USR
+          remote.password = $SSH_PSW
+
           steps {
-            withCredentials([
-              usernamePassword(
-                credentialsId: 'rolex-ssh-user',
-                passwordVariable: 'password',
-                usernameVariable: 'username')
-            ]) {
-              sshPut remote: remote, from: './build/*', into: '~/projects/test'
-            }
+           sshPut remote: remote, from: './build/*', into: '~/projects/test'
           }
         }
       }
