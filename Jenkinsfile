@@ -34,7 +34,11 @@ pipeline {
     }
 
     stage('deploy') {
-     input message: 'Deploy to server? (Click "Proceed" to continue)'
+       input {
+          message "Should we continue?"
+          ok "Yes, we should."
+
+      }
       stages {
         stage('production build') {
           steps {
