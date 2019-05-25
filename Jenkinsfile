@@ -34,7 +34,9 @@ pipeline {
     }
 
     stage('deploy') {
-       input message: 'Deploy to server? (Click "Proceed" to continue)'
+      input {
+        message: 'Deploy to server?'
+      }
       stages {
         stage('production build') {
           steps {
@@ -42,16 +44,9 @@ pipeline {
           }
         }
         stage('Publish') {
-          def remote = [:]
-          remote.name = "vbox-test-01"
-          remote.host = "192.168.0.105"
-          remote.allowAnyHosts = true
-          remote.fileTransfer = 'scp'
-          remote.user = $SSH_USR
-          remote.password = $SSH_PSW
-
           steps {
-           sshPut remote: remote, from: './build/*', into: '~/projects/test'
+            sh 'ssh $SSH_USR:$SSH_PSW@192.168.0.1 rm -rf ~/projects/test'
+            sh 'ls -lah'
           }
         }
       }
