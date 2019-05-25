@@ -15,7 +15,7 @@ pipeline {
   stages {
     stage("Install dependencies"){
       steps{
-        sh 'npm install --no-bin-links'
+        sh 'yarn install'
       }
     }
 
@@ -47,7 +47,7 @@ pipeline {
         }
         stage('Publish') {
           steps {
-            sh 'ssh $SSH_USR:$SSH_PSW@192.168.0.1 rm -rf ~/projects/test'
+            sh 'ssh $SSH_USR:$SSH_PSW@192.168.0.105 rm -rf ~/projects/test'
             sh 'ls -lah'
           }
         }
