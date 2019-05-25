@@ -1,31 +1,34 @@
 
 pipeline {
 
-  agent none
+  agent {
+    docker {
+      image 'node:9-alpine'
+      args '-p 3000:3000'
+      label 'node-alpine'
+    }
+  }
   environment {
      SSH = credentials("rolex-ssh-user")
   }
 
   stages {
-    agent {
-      docker {
-        image 'node:9-alpine'
-        args '-p 3000:3000'
-      }
-    }
     stage("Install dependencies"){
+      agent { label 'node-alpine' }
       steps{
         sh 'npm install --no-bin-links'
       }
     }
 
     stage('run test') {
+      agent { label 'node-alpine' }
       steps {
         sh './jenkins/scripts/test.sh'
       }
     }
 
     stage('serve') {
+      agent { label 'node-alpine' }
       steps{
          sh './jenkins/scripts/deliver.sh'
          input message: 'Finished using the web site? (Click "Proceed" to continue)'
@@ -34,6 +37,7 @@ pipeline {
     }
 
     stage('deploy') {
+      agent { label 'node-alpine' }
        input {
           message "Should we continue?"
           ok "Yes, we should."
