@@ -1,18 +1,18 @@
 
 pipeline {
 
-  agent {
-    docker {
-      image 'node:9-alpine'
-      args '-p 3000:3000'
-    }
-  }
-
+  agent none
   environment {
      SSH = credentials("rolex-ssh-user")
   }
 
   stages {
+    agent {
+      docker {
+        image 'node:9-alpine'
+        args '-p 3000:3000'
+      }
+    }
     stage("Install dependencies"){
       steps{
         sh 'npm install --no-bin-links'
