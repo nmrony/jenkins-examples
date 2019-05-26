@@ -14,7 +14,7 @@ pipeline {
   stages {
     stage("Install dependencies"){
       steps{
-        sh 'npm install'
+        sh 'npm install --no-bin-links'
       }
     }
 
