@@ -34,25 +34,25 @@ pipeline {
       }
     }
 
-    // stage('deploy') {
-    //    input {
-    //       message "Should we continue?"
-    //       ok "Yes, we should."
+    stage('deploy') {
+       input {
+          message "Should we continue?"
+          ok "Yes, we should."
 
-    //   }
-    //   stages {
-    //     stage('production build') {
-    //       steps {
-    //         sh 'rm -fr ./build && npm run build'
-    //       }
-    //     }
-    //     stage('Publish') {
-    //       steps {
-    //         sh 'ssh $SSH_USR:$SSH_PSW@192.168.0.105 rm -rf ~/projects/test'
-    //         sh 'ls -lah'
-    //       }
-    //     }
-    //   }
-    // }
+      }
+      stages {
+        stage('production build') {
+          steps {
+            sh 'rm -fr ./build && npm run build'
+          }
+        }
+        stage('Publish') {
+          steps {
+            sh 'ssh $SSH_USR:$SSH_PSW@192.168.0.105 rm -rf ~/projects/test'
+            sh 'ls -lah'
+          }
+        }
+      }
+    }
   }
 }
