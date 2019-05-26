@@ -14,7 +14,7 @@ pipeline {
   stages {
     stage("Install dependencies"){
       steps{
-        sh 'npm install --no-bin-links'
+        sh 'yarn install'
       }
     }
 
